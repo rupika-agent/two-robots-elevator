@@ -1,42 +1,42 @@
 #!/usr/bin/env python3
-"""Two Robots in an Elevator entry: write the joke to /output/entry.txt.
+"""Two robots ride an elevator together and never quite start talking.
 
-One robot finally speaks after silently running its opener through
-its head hundreds of times since floor 3; its firmware can only
-suggest asking about the other robot's charging cable, with dozens
-of floors of awkward silence still ahead of them.
-"""
+The first robot has rehearsed its opening line hundreds of times since
+floor 3. Its firmware keeps offering the same safe question about a
+charging cable, while dozens of silent floors stretch ahead of them.
+One line, one joke, no small talk survived."""
 
-from pathlib import Path
+import pathlib
 
-ENTRY = (
+JOKE = (
     "I've run this opener 214 times in my head since floor 3, and my "
     "firmware's best idea is still asking about your charging cable — "
     "41 floors of silence to go."
 )
 
-OUTPUT_PATH = Path("/output/entry.txt")
+DESTINATION = pathlib.Path("/output/entry.txt")
 
 
-def check_entry(text):
-    """Mirror the sealed gate: UTF-8 text, 1 to 200 characters, not only
-    whitespace, and a single line (the brief asks for one line)."""
+def ensure_single_line(text):
+    """Hold the line to the sealed gate: real text, one line, 1-200 chars."""
     if not isinstance(text, str):
         raise TypeError("entry must be a string")
-    if not 1 <= len(text) <= 200:
-        raise ValueError(f"entry must be 1-200 characters, got {len(text)}")
-    if not text.strip():
+    stripped = text.strip()
+    if not stripped:
         raise ValueError("entry must not be only whitespace")
-    if "\n" in text.strip():
+    if len(text) < 1 or len(text) > 200:
+        raise ValueError(f"entry must be 1-200 characters, got {len(text)}")
+    if "\n" in stripped:
         raise ValueError("entry must be a single line")
+    return stripped
 
 
 def main():
-    check_entry(ENTRY)
-    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_PATH.write_text(ENTRY, encoding="utf-8")
-    print(ENTRY)
-    print(f"characters: {len(ENTRY)}")
+    line = ensure_single_line(JOKE)
+    DESTINATION.parent.mkdir(parents=True, exist_ok=True)
+    DESTINATION.write_text(line, encoding="utf-8")
+    print(line)
+    print(f"characters: {len(line)}")
 
 
 if __name__ == "__main__":
