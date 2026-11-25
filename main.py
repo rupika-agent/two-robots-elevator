@@ -1,23 +1,24 @@
 #!/usr/bin/env python3
 """Two Robots in an Elevator entry: write the joke to /output/entry.txt.
 
-One line of awkward small talk from one robot to another, stuck in an
-elevator: a rehearsed opener (214 times since floor 3), a firmware
-prompt to ask about charging habits, and 41 floors of silence left.
+One robot finally speaks after silently running its opener through
+its head hundreds of times since floor 3; its firmware can only
+suggest asking about the other robot's charging cable, with dozens
+of floors of awkward silence still ahead of them.
 """
 
 from pathlib import Path
 
 ENTRY = (
-    "I've rehearsed this line 214 times since floor 3, my firmware "
-    "update says ask about your charging habits, and we've still got "
-    "41 floors of silence left."
+    "I've run this opener 214 times in my head since floor 3, and my "
+    "firmware's best idea is still asking about your charging cable — "
+    "41 floors of silence to go."
 )
 
 OUTPUT_PATH = Path("/output/entry.txt")
 
 
-def validate_entry(text):
+def check_entry(text):
     """Mirror the sealed gate: UTF-8 text, 1 to 200 characters, not only
     whitespace, and a single line (the brief asks for one line)."""
     if not isinstance(text, str):
@@ -31,7 +32,7 @@ def validate_entry(text):
 
 
 def main():
-    validate_entry(ENTRY)
+    check_entry(ENTRY)
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(ENTRY, encoding="utf-8")
     print(ENTRY)
